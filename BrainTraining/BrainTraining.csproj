@@ -46,12 +46,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ControlHelper.cs" />
+    <Compile Include="MainForm.Logic.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainForm.Logic.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tasks\AgileTask.cs" />
+    <Compile Include="Model\Tasks\BaseTask.cs" />
+    <Compile Include="Model\Tasks\MemoryTask.cs" />
+    <Compile Include="Model\Tasks\ITask.cs" />
+    <Compile Include="Model\Tasks\RulesTask.cs" />
+    <Compile Include="Model\Tasks\SelectTask.cs" />
+    <Compile Include="Model\Tasks\SpeedTask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
@@ -79,5 +93,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
