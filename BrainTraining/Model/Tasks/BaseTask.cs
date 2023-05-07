@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BrainTraining.Model.UI;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -69,7 +70,7 @@ namespace BrainTraining.Model.Tasks {
             var result = new Button {
                 Bounds = MainForm.ButtonBack.Bounds,
             };
-
+            result.Click += (o,e) => Sound.Play(SoundType.Button);
             return result;
         }
     }

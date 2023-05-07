@@ -7,8 +7,8 @@ namespace BrainTraining {
         public MainForm() {
             InitializeComponent();
             MaximizeBox = false;
-            TopMost = true;
-            FormBorderStyle = FormBorderStyle.None;
+            //TopMost = true;
+            //FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
         }
 

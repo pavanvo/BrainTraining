@@ -1,4 +1,5 @@
 ﻿using BrainTraining.Helpers;
+using BrainTraining.Model.UI;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -14,11 +15,13 @@ namespace BrainTraining.Model.Tasks {
         }
 
         private Button getButton(Control parent) {
-            return new Button {
+            var result = new Button {
                 Height = parent.Height / 8,
                 Width = parent.Width / 2,
                 Font = new Font("Microsoft Sans Serif", 25.25F, FontStyle.Regular, GraphicsUnit.Point, 204),
             };
+            result.Click += (o, e) => Sound.Play(SoundType.Button);
+            return result;
         }
 
         override protected Panel getHeader() {
@@ -48,30 +51,33 @@ namespace BrainTraining.Model.Tasks {
         override protected Panel getContent() {
             var result = base.getContent();
 
-            var momoryTask = new MemoryTask(this);
-            var memory = getButton(result);
-            memory.Text = "Память";
-            memory.Click += (o, e) => momoryTask.Setup();
-            result.Controls.Add(memory);
-            memory.Move2Centr(0);
+            var memoryTask = new MemoryTask(this);
+            var memoryButton = getButton(result);
+            memoryButton.Text = "Память";
+            memoryButton.Click += (o, e) => { Sound.Play(SoundType.Button); memoryTask.Setup(); };
+            result.Controls.Add(memoryButton);
+            memoryButton.Move2Centr(0);
 
+            var agileTask = new AgileTask(this);
             var agile = getButton(result);
             agile.Text = "Гибкость";
-            agile.Click += (o, e) => momoryTask.Setup();
+            agile.Click += (o, e) => { Sound.Play(SoundType.Button); agileTask.Setup(); };
             result.Controls.Add(agile);
             agile.Move2Centr(25);
 
-            var speed = getButton(result);
-            speed.Text = "Скорость";
-            speed.Click += (o, e) => momoryTask.Setup();
-            result.Controls.Add(speed);
-            speed.Move2Centr(50);
+            var speedTask = new SpeedTask(this);
+            var speedButton = getButton(result);
+            speedButton.Text = "Скорость";
+            speedButton.Click += (o, e) => { Sound.Play(SoundType.Button); speedTask.Setup(); };
+            result.Controls.Add(speedButton);
+            speedButton.Move2Centr(50);
 
-            var rules = getButton(result);
-            rules.Text = "Правила";
-            rules.Click += (o, e) => momoryTask.Setup();
-            result.Controls.Add(rules);
-            rules.Move2Centr(75);
+            var rulesTask = new RulesTask(this);
+            var rulesButton = getButton(result);
+            rulesButton.Text = "Правила";
+            rulesButton.Click += (o, e) => { Sound.Play(SoundType.Button); rulesTask.Setup(); };
+            result.Controls.Add(rulesButton);
+            rulesButton.Move2Centr(75);
 
             return result;
         }
