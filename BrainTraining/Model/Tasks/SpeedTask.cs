@@ -37,9 +37,13 @@ namespace BrainTraining.Model.Tasks {
             var result = await SetLevel();
             if (result)
                 Sound.Play(SoundType.Win);
+            else {
+                //TODO restart
+            }
         }
 
         private async Task<bool> SetLevel() {
+            CurrentNumber = 0;
             var points = GenerateLevel();
 
             FillTable(points);
@@ -63,7 +67,7 @@ namespace BrainTraining.Model.Tasks {
                     do {
                         if (points.ContainsKey(point)) break;
 
-                            number = random.Next(1, NubresCount +1);
+                        number = random.Next(1, NubresCount + 1);
                         if (!points.ContainsValue(number))
                             points.Add(point, number);
 
