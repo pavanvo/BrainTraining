@@ -1,8 +1,6 @@
 ﻿using BrainTraining.Helpers;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Drawing;
-using System.Reflection.Emit;
 using System.Windows.Forms;
 using System;
 using System.Threading.Tasks;
@@ -13,12 +11,9 @@ namespace BrainTraining.Model.Tasks {
     internal class MemoryTask : BaseTask {
         SelectTask Menu { get; set; }
 
-        Sound Sound = new Sound();
-
         static readonly int TableColomns = 6;
         static readonly int TableRows = 6;
         static readonly int MemoryPause = 2000;
-        static readonly Color MainColor = Color.FromArgb(64, 176, 255);
 
 
         TableLayoutPanel Table { get; set; } = ControlHelper.GetTable(TableColomns, TableRows);
@@ -124,7 +119,7 @@ namespace BrainTraining.Model.Tasks {
             Table.Controls.Clear();
             foreach (var point in points) {
                 var pictureBox = new PictureBox {
-                    BackColor = point.Value ? MainColor : Color.WhiteSmoke,
+                    BackColor = point.Value ? ControlHelper.Blue : Color.WhiteSmoke,
                     Dock = DockStyle.Fill,
                     Margin = new Padding(1),
                     Tag = point.Value,
@@ -156,7 +151,7 @@ namespace BrainTraining.Model.Tasks {
             if (blue) {
                 CurrentBlue++;
                 Sound.Play(SoundType.Good);
-                pictureBox.BackColor = MainColor;
+                pictureBox.BackColor = ControlHelper.Blue;
                 if (CurrentBlue == LavelBlue) mre.Set();
             }
             else {

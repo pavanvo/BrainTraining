@@ -5,7 +5,6 @@ namespace BrainTraining.Model.Tasks {
     internal class SpeedTask : BaseTask {
 
         SelectTask Menu { get; set; }
-        Sound Sound = new Sound();
 
         public SpeedTask(SelectTask menu) : base(menu.MainForm) {
             Menu = menu;

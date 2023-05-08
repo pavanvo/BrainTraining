@@ -4,7 +4,6 @@ using System.Windows.Forms;
 namespace BrainTraining.Model.Tasks {
     internal class AgileTask : BaseTask {
         SelectTask Menu { get; set; }
-        Sound Sound = new Sound();
 
         public AgileTask(SelectTask menu) : base(menu.MainForm) {
             Menu = menu;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Media;
 using BrainTraining.Properties;
 
@@ -12,7 +10,7 @@ namespace BrainTraining.Model.UI {
         Good,
         Win,
     }
-    class Sound {
+    static class Sound {
         static Dictionary<SoundType, SoundPlayer> Map = new Dictionary<SoundType, SoundPlayer>(){
                 {SoundType.Button, new SoundPlayer(Resources.switch_sound)},
                 {SoundType.Error, new SoundPlayer(Resources.Звук_2)},
@@ -21,7 +19,7 @@ namespace BrainTraining.Model.UI {
                 {SoundType.Win, new SoundPlayer(Resources.Звук_5)},
             };
 
-        public void Play(SoundType soundType) {
+        public static void Play(SoundType soundType) {
             var player = Map[soundType];
             player.Stop();
             player.Play();

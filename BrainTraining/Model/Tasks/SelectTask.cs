@@ -5,8 +5,6 @@ using System.Windows.Forms;
 
 namespace BrainTraining.Model.Tasks {
     internal class SelectTask : BaseTask {
-
-        Sound Sound = new Sound();
         public override int HeaderHeight { get; protected set; } = 25;
         public override int ContentHeight { get; protected set; } = 75;
         public override int FooterHeight { get; protected set; } = 0;
