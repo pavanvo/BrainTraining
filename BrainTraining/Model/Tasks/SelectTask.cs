@@ -5,6 +5,8 @@ using System.Windows.Forms;
 
 namespace BrainTraining.Model.Tasks {
     internal class SelectTask : BaseTask {
+
+        Sound Sound = new Sound();
         public override int HeaderHeight { get; protected set; } = 25;
         public override int ContentHeight { get; protected set; } = 75;
         public override int FooterHeight { get; protected set; } = 0;
@@ -20,7 +22,6 @@ namespace BrainTraining.Model.Tasks {
                 Width = parent.Width / 2,
                 Font = new Font("Microsoft Sans Serif", 25.25F, FontStyle.Regular, GraphicsUnit.Point, 204),
             };
-            result.Click += (o, e) => Sound.Play(SoundType.Button);
             return result;
         }
 
@@ -86,7 +87,7 @@ namespace BrainTraining.Model.Tasks {
             var result = base.getButtonBack();
 
             result.Text = "Выход";
-            result.Click += (o, e) => Application.Exit();
+            result.Click += (o, e) => { Sound.Play(SoundType.Button); Application.Exit(); };
 
             return result;
         }

@@ -7,5 +7,27 @@ namespace BrainTraining.Helpers {
             control.Left = (control.Parent.Width - control.Width) / 2;
             control.Top = Convert.ToInt32(control.Parent.Height / 100f * topPercent);
         }
+
+        public static void Move2Centr(this Control control) {
+            control.Left = (control.Parent.Width - control.Width) / 2;
+            control.Top = (control.Parent.Height - control.Height) / 2;
+        }
+
+        public static TableLayoutPanel GetTable(int colomns, int rows) {
+            var table = new TableLayoutPanel {
+                ColumnCount = colomns,
+                RowCount = rows,
+                CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
+            };
+            for (int i = 0; i < colomns; i++) {
+                table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F / colomns));
+            }
+            for (int i = 0; i < rows; i++) {
+                table.RowStyles.Add(new RowStyle(SizeType.Percent, 100F / rows));
+            }
+            table.Size = new System.Drawing.Size(500, 500);
+
+            return table;
+        }
     }
 }

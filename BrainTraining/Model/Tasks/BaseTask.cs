@@ -70,7 +70,6 @@ namespace BrainTraining.Model.Tasks {
             var result = new Button {
                 Bounds = MainForm.ButtonBack.Bounds,
             };
-            result.Click += (o,e) => Sound.Play(SoundType.Button);
             return result;
         }
     }

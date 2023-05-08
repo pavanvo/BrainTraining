@@ -98,9 +98,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Звук 1.wav" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Звук 2.wav" />
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +108,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Звук 5.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\switch-sound.wav" />
+    <None Include="Resources\Звук 1.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,9 +1,11 @@
-﻿using System.Windows.Forms;
+﻿using BrainTraining.Model.UI;
+using System.Windows.Forms;
 
 namespace BrainTraining.Model.Tasks {
     internal class SpeedTask : BaseTask {
 
         SelectTask Menu { get; set; }
+        Sound Sound = new Sound();
 
         public SpeedTask(SelectTask menu) : base(menu.MainForm) {
             Menu = menu;
@@ -33,7 +35,7 @@ namespace BrainTraining.Model.Tasks {
             var result = base.getButtonBack();
 
             result.Text = "В меню";
-            result.Click += (o, e) => Menu.Setup();
+            result.Click += (o, e) => { Sound.Play(SoundType.Button); Menu.Setup(); };
 
             return result;
         }
