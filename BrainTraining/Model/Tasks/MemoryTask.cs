@@ -148,7 +148,8 @@ namespace BrainTraining.Model.Tasks {
         private void PictureBox_Click(object sender, EventArgs e) {
             var pictureBox = (PictureBox)sender;
             var blue = (bool)pictureBox.Tag;
-            if (blue) {
+
+            if (blue && pictureBox.BackColor != ControlHelper.Blue) {
                 CurrentBlue++;
                 Sound.Play(SoundType.Good);
                 pictureBox.BackColor = ControlHelper.Blue;
