@@ -21,7 +21,7 @@ namespace BrainTraining.Model.Tasks {
             { Color.Green, "Зелёный"},
             { Color.Blue, "Синий"},
             { Color.Black, "Чёрный"},
-            { Color.Brown, "Коричневый"},
+            { Color.Yellow, "Жёлтый"},
         };
 
         Dictionary<int, int> Levels = new Dictionary<int, int>() {
