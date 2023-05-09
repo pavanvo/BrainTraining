@@ -221,19 +221,21 @@ namespace BrainTraining.Model.Tasks {
             var yes = new RoundButton {
                 Width = result.Width / 2,
                 Dock = DockStyle.Right,
-                BackgroundImage = Resources.greenCheck,
             };
             yes.Click += Yes_Click;
 
             var no = new RoundButton {
                 Width = result.Width / 2,
                 Dock = DockStyle.Left,
-                BackgroundImage = Resources.redCross,
             };
+            
             no.Click += No_Click;
 
             result.Controls.Add(yes);
             result.Controls.Add(no);
+
+            yes.SetImage(Resources.greenCheck);
+            no.SetImage(Resources.redCross);
 
             return result;
         }

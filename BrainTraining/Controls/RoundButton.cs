@@ -48,6 +48,8 @@ namespace BrainTraining.Controls {
         private bool IsHighlighted;
         private bool IsPressed;
         private bool IsChecked;
+        private Image Image;
+        private PointF Point;
 
         public RoundButton() {
             Size = new Size(100, 40);
@@ -68,6 +70,12 @@ namespace BrainTraining.Controls {
             ButtonPressedForeColor = Color.White;
         }
 
+        public void SetImage(Image image) {
+            var minimal = Height < Width ? Height : Width;
+            Image = new Bitmap(image, new Size(minimal, minimal));
+            Point = new PointF((Width - minimal) / 2F, (Height - minimal) / 2F);
+        }
+
         protected override CreateParams CreateParams {
             get {
                 CreateParams createParams = base.CreateParams;
@@ -81,7 +89,6 @@ namespace BrainTraining.Controls {
 
         protected override void OnPaint(PaintEventArgs e) {
             try {
-                base.OnPaint(e);
                 e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
                 var current = Toggle ? IsChecked : IsPressed;
 
@@ -89,10 +96,11 @@ namespace BrainTraining.Controls {
                 var backColor = current ? ButtonPressedColor : IsHighlighted ? ButtonHighlightColor : BackColor;
                 var backColor2 = current ? ButtonPressedColor2 : IsHighlighted ? ButtonHighlightColor2 : BackColor2;
 
-                if (!this.Enabled) {
+                if (!Enabled) {
                     backColor = Color.Silver;
                     backColor2 = Color.Silver;
                 }
+
                 var rect = ClientRectangle;
                 rect.Inflate(-4, -4);
 
@@ -102,16 +110,17 @@ namespace BrainTraining.Controls {
                 using (var brush = new LinearGradientBrush(ClientRectangle, backColor, backColor2, LinearGradientMode.Vertical))
                     e.Graphics.FillPath(brush, Path);
 
-                using (var brush = new SolidBrush(foreColor)) {
-                    var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-                    e.Graphics.DrawString(Text, Font, brush, rect, sf);
+                if (!string.IsNullOrWhiteSpace(Text))
+                    using (var brush = new SolidBrush(foreColor)) {
+                        var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+                        e.Graphics.DrawString(Text, Font, brush, rect, sf);
+                    }
+
+
+                if (Image != null) {
+                    e.Graphics.DrawImage(Image, Point);
                 }
-                if (BackgroundImage != null) {
-                    var minimal = Height < Width ? Height : Width;
-                    var image = new Bitmap(BackgroundImage, new Size(minimal, minimal));
-                    var point = new PointF((Width - minimal) / 2F, (Height - minimal) / 2F);
-                    e.Graphics.DrawImage(image, point);
-                }
+
             } catch { }
         }
 
