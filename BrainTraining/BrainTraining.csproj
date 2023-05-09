@@ -68,6 +68,7 @@
     <Compile Include="Model\Tasks\BaseTask.cs" />
     <Compile Include="Model\Tasks\MemoryTask.cs" />
     <Compile Include="Model\Tasks\ITask.cs" />
+    <Compile Include="Model\Tasks\RestartTask.cs" />
     <Compile Include="Model\Tasks\RulesTask.cs" />
     <Compile Include="Model\Tasks\SelectTask.cs" />
     <Compile Include="Model\Tasks\SpeedTask.cs" />

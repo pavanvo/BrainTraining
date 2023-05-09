@@ -9,7 +9,7 @@ using BrainTraining.Model.UI;
 
 namespace BrainTraining.Model.Tasks {
     internal class MemoryTask : BaseTask {
-        SelectTask Menu { get; set; }
+        ITask Menu { get; set; }
 
         public override string Name => "Память";
 
@@ -61,7 +61,7 @@ namespace BrainTraining.Model.Tasks {
             ForeColor = Color.DarkRed,
         };
 
-        public MemoryTask(SelectTask menu) : base(menu.MainForm) {
+        public MemoryTask(ITask menu) : base(menu.MainForm) {
             Menu = menu;
 
             Setup = async () => {
@@ -84,7 +84,8 @@ namespace BrainTraining.Model.Tasks {
                 Sound.Play(SoundType.Win);
             }
             else {
-                //TODO restart
+                var restarttask = new RestartTask(Menu, this, LabelScore.Text);//TODO get Scorefrom Level
+                restarttask.Setup();
             }
         }
 

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace BrainTraining.Model.Tasks {
     internal class SpeedTask : BaseTask {
 
-        SelectTask Menu { get; set; }
+        ITask Menu { get; set; }
 
         public override string Name => "Скорость";
 
@@ -25,7 +25,7 @@ namespace BrainTraining.Model.Tasks {
 
         private int CurrentNumber = 0;
 
-        public SpeedTask(SelectTask menu) : base(menu.MainForm) {
+        public SpeedTask(ITask menu) : base(menu.MainForm) {
             Menu = menu;
             Waiter.TimeFormat = @"mm\:ss\:ff";
            
@@ -44,7 +44,8 @@ namespace BrainTraining.Model.Tasks {
                 Sound.Play(SoundType.Win);
             }
             else {
-                //TODO restart
+                var restarttask = new RestartTask(Menu, this, $"{CurrentNumber} за {Waiter.LabelTime.Text}");//TODO get Scorefrom Level
+                restarttask.Setup();
             }
         }
 

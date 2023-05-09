@@ -15,7 +15,8 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace BrainTraining.Model.Tasks {
     internal class AgileTask : BaseTask {
-        SelectTask Menu { get; set; }
+
+        ITask Menu { get; set; }
 
         public override string Name => "Гибкость";
 
@@ -79,9 +80,7 @@ namespace BrainTraining.Model.Tasks {
         TableLayoutPanel Table { get; set; } = ControlHelper.GetTable(TableColomns, TableRows);
         Label LabelScore = new Label {
             Font = ControlHelper.BiggerFont,
-            TextAlign = ContentAlignment.MiddleCenter,
-            Height = 50,
-            Width = ControlHelper.DefaultWidth,
+            AutoSize = true,
             ForeColor = Color.DarkRed,
         };
 
@@ -89,7 +88,7 @@ namespace BrainTraining.Model.Tasks {
         Waiter Waiter = new Waiter();
         private bool? Answer = null;
 
-        public AgileTask(SelectTask menu) : base(menu.MainForm) {
+        public AgileTask(ITask menu) : base(menu.MainForm) {
             Menu = menu;
 
             Setup = async () => {
@@ -112,15 +111,15 @@ namespace BrainTraining.Model.Tasks {
                 Sound.Play(SoundType.Win);
             }
             else {
-
+                var restarttask = new RestartTask(Menu, this, LabelScore.Text);//TODO get Scorefrom Level
+                restarttask.Setup();
             }
-            // При неправильном выборе высвечивается окно, в котором написано – 
-            //Ответ неверный. И ниже предложено начать заново или войти в главное меню.
         }
 
         private async Task<bool> SetLevel(KeyValuePair<int, int> lvl) {
             var speed = lvl.Value * 1000;
             LabelScore.Text = lvl.Key + "";
+            LabelScore.Move2Centr(0);
             Answer = null;
 
             var random = new Random();
@@ -197,7 +196,7 @@ namespace BrainTraining.Model.Tasks {
             var result = base.getHeader();
 
             result.Controls.Add(LabelScore);
-            LabelScore.Move2Centr(0);
+
 
             result.Controls.Add(Waiter.ProgressBar);
             Waiter.ProgressBar.Move2Centr(50);

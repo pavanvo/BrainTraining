@@ -4,10 +4,10 @@ using System.Windows.Forms;
 namespace BrainTraining.Model.Tasks {
     internal class RulesTask : BaseTask {
 
-        SelectTask Menu { get; set; }
+        ITask Menu { get; set; }
         public override string Name => "Правила";
 
-        public RulesTask(SelectTask menu) : base(menu.MainForm) {
+        public RulesTask(ITask menu) : base(menu.MainForm) {
             Menu = menu;
 
             Setup = () => MainForm.SetupTask(this);
