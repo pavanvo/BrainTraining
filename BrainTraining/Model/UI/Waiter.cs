@@ -43,7 +43,8 @@ namespace BrainTraining.Model.UI {
                     ProgressBar.Invoke(new Action(() => ProgressBar.Value = elapsed < ProgressBar.Maximum ? elapsed : ProgressBar.Maximum));
 
                     if (elapsed > timeout) {
-                        Sound.Play(SoundType.TimeIsUp);
+                        stopWatch.Stop();
+                        timer.Stop();
                         mre.Set();
                     }
                 };

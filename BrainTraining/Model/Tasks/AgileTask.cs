@@ -26,7 +26,7 @@ namespace BrainTraining.Model.Tasks {
         };
 
         Dictionary<int, int> Levels = new Dictionary<int, int>() {
-            { 1, 15},
+            { 1, 1},
             { 2, 14},
             { 3, 14},
             { 4, 14},
@@ -134,7 +134,7 @@ namespace BrainTraining.Model.Tasks {
 
             await Waiter.Wait(timeout: speed);
 
-            if (Answer == null) return false;
+            if (Answer == null) { Sound.Play(SoundType.TimeIsUp); return false; }
 
             var result = (color1.Key == color3.Key) == Answer;
             //Show result
@@ -155,7 +155,7 @@ namespace BrainTraining.Model.Tasks {
             Table.SuspendLayout();
             Table.Controls.Clear();
 
-            var label = new Controls.GrowLabel {
+            var label = new GrowLabel {
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleCenter,
                 Text = color1,
