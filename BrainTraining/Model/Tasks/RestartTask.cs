@@ -1,4 +1,5 @@
-﻿using BrainTraining.Helpers;
+﻿using BrainTraining.Controls;
+using BrainTraining.Helpers;
 using BrainTraining.Model.UI;
 using System.Drawing;
 using System.Windows.Forms;
@@ -12,12 +13,12 @@ namespace BrainTraining.Model.Tasks {
         public override string Name => "Попробуйте ещё раз";
         public override string Description => $"{Name}";
 
-        Label labelRestart = new Controls.GrowLabel {
+        Label labelRestart = new GrowLabel {
             AutoSize = true,
             Font = ControlHelper.BiggerFont,
         };
 
-        Label labelResult = new Controls.GrowLabel {
+        Label labelResult = new GrowLabel {
             AutoSize = true,
             Font = ControlHelper.BiggerFont,
 
@@ -58,7 +59,7 @@ namespace BrainTraining.Model.Tasks {
         override protected Panel getFooter() {
             var result = base.getFooter();
 
-            var previous = new Button {
+            var previous = new RoundButton {
                 Width = result.Width / 2,
                 Dock = DockStyle.Right,
                 Font = ControlHelper.BigFont,
@@ -67,7 +68,7 @@ namespace BrainTraining.Model.Tasks {
             };
             previous.Click += (o, e) => { Sound.Play(SoundType.Button); PreviousTask.Setup(); };
 
-            var toMenu = new Button {
+            var toMenu = new RoundButton {
                 Width = result.Width / 2,
                 Dock = DockStyle.Left,
                 Font = ControlHelper.BigFont,
@@ -82,7 +83,7 @@ namespace BrainTraining.Model.Tasks {
             return result;
         }
 
-        override protected Button getButtonBack() {
+        override protected RoundButton getButtonBack() {
             var result = base.getButtonBack();
 
             result.Text = "В меню";

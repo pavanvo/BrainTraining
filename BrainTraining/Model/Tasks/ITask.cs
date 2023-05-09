@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BrainTraining.Controls;
+using System;
 using System.Windows.Forms;
 
 namespace BrainTraining.Model {
@@ -7,7 +8,7 @@ namespace BrainTraining.Model {
         string Description { get; }
         MainForm MainForm { get; }
 
-        Button ButtonBack { get; }
+        RoundButton ButtonBack { get; }
 
         Panel Header { get; }
         Panel Content { get; }

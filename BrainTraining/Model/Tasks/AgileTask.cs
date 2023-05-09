@@ -1,4 +1,5 @@
-﻿using BrainTraining.Helpers;
+﻿using BrainTraining.Controls;
+using BrainTraining.Helpers;
 using BrainTraining.Model.UI;
 using BrainTraining.Properties;
 using System;
@@ -217,21 +218,17 @@ namespace BrainTraining.Model.Tasks {
         override protected Panel getFooter() {
             var result = base.getFooter();
 
-            var yes = new Button {
+            var yes = new RoundButton {
                 Width = result.Width / 2,
                 Dock = DockStyle.Right,
                 BackgroundImage = Resources.greenCheck,
-                BackgroundImageLayout = ImageLayout.Zoom,
-                BackColor = Color.White,
             };
             yes.Click += Yes_Click;
 
-            var no = new Button {
+            var no = new RoundButton {
                 Width = result.Width / 2,
                 Dock = DockStyle.Left,
                 BackgroundImage = Resources.redCross,
-                BackgroundImageLayout = ImageLayout.Zoom,
-                BackColor = Color.White,
             };
             no.Click += No_Click;
 
@@ -241,7 +238,7 @@ namespace BrainTraining.Model.Tasks {
             return result;
         }
 
-        override protected Button getButtonBack() {
+        override protected RoundButton getButtonBack() {
             var result = base.getButtonBack();
 
             result.Text = "В меню";

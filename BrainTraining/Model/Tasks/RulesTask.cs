@@ -1,9 +1,7 @@
-﻿using BrainTraining.Helpers;
+﻿using BrainTraining.Controls;
+using BrainTraining.Helpers;
 using BrainTraining.Model.UI;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BrainTraining.Model.Tasks {
@@ -78,7 +76,7 @@ namespace BrainTraining.Model.Tasks {
             return result;
         }
 
-        override protected Button getButtonBack() {
+        override protected RoundButton getButtonBack() {
             var result = base.getButtonBack();
 
             result.Text = "В меню";

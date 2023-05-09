@@ -1,4 +1,5 @@
-﻿using BrainTraining.Helpers;
+﻿using BrainTraining.Controls;
+using BrainTraining.Helpers;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -19,7 +20,7 @@ namespace BrainTraining.Model.Tasks {
 
         public Action Setup { get; protected set; } = () => { };
 
-        public Button ButtonBack { get; protected set; }
+        public RoundButton ButtonBack { get; protected set; }
 
         public Panel Header { get; protected set; }
 
@@ -52,7 +53,7 @@ namespace BrainTraining.Model.Tasks {
 
         protected virtual Panel getHeader() {
             var header = Convert.ToInt32(minimal / 100d * HeaderHeight);
-            var result  = new Controls.PanelDoubleBuffered() {
+            var result = new PanelDoubleBuffered() {
                 Size = new Size(minimal, header)
             };
 
@@ -62,7 +63,7 @@ namespace BrainTraining.Model.Tasks {
 
         protected virtual Panel getContent() {
             var content = Convert.ToInt32(minimal / 100d * ContentHeight);
-            var result = new Controls.PanelDoubleBuffered() {
+            var result = new PanelDoubleBuffered() {
                 Size = new Size(minimal, content),
             };
 
@@ -71,20 +72,19 @@ namespace BrainTraining.Model.Tasks {
 
         protected virtual Panel getFooter() {
             var footer = Convert.ToInt32(minimal / 100d * FooterHeight);
-            var result = new Controls.PanelDoubleBuffered() {
+            var result = new PanelDoubleBuffered() {
                 Size = new Size(minimal, footer)
             };
 
             return result;
         }
 
-        protected virtual Button getButtonBack() {
-            var result = new Button {
+        protected virtual RoundButton getButtonBack() {
+            var result = new RoundButton {
                 Location = new Point(13, 13),
                 Size = new Size(150, 150),
                 Font = ControlHelper.BigFont,
                 Text = "Назад",
-                UseVisualStyleBackColor = true,
             };
             return result;
         }

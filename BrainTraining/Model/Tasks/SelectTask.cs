@@ -1,8 +1,8 @@
-﻿using BrainTraining.Helpers;
+﻿using BrainTraining.Controls;
+using BrainTraining.Helpers;
 using BrainTraining.Model.UI;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
+using System.Windows.Forms;
 
 namespace BrainTraining.Model.Tasks {
     internal class SelectTask : BaseTask {
@@ -59,7 +59,7 @@ namespace BrainTraining.Model.Tasks {
 
             foreach (var task in Tasks) {
 
-                var button = new Button {
+                var button = new RoundButton {
                     Height = result.Height / 8,
                     Width = result.Width / 2,
                     Font = ControlHelper.BigFont,
@@ -75,7 +75,7 @@ namespace BrainTraining.Model.Tasks {
             return result;
         }
 
-        override protected Button getButtonBack() {
+        override protected RoundButton getButtonBack() {
             var result = base.getButtonBack();
 
             result.Text = "Выход";

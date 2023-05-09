@@ -1,4 +1,5 @@
-﻿using BrainTraining.Helpers;
+﻿using BrainTraining.Controls;
+using BrainTraining.Helpers;
 using BrainTraining.Model.UI;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,7 @@ namespace BrainTraining.Model.Tasks {
         private int CurrentBlue = 0;
         private int LavelBlue = 0;
 
-        Label LabelScore = new Controls.GrowLabel {
+        Label LabelScore = new GrowLabel {
             Font = ControlHelper.BiggerFont,
             AutoSize = true,
             ForeColor = ControlHelper.Orange,
@@ -204,7 +205,7 @@ namespace BrainTraining.Model.Tasks {
             return result;
         }
 
-        override protected Button getButtonBack() {
+        override protected RoundButton getButtonBack() {
             var result = base.getButtonBack();
 
             result.Text = "В меню";
