@@ -88,7 +88,7 @@ namespace BrainTraining.Model.Tasks {
                     Margin = new Padding(1),
                     Tag = point.Value,
                     Text = point.Value.ToString(),
-                    Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 204),
+                    Font = ControlHelper.SmallFont,
                 };
                 button.MouseDown += Button_MouseDown;
                 button.MouseUp += Button_MouseUp;

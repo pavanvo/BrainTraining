@@ -18,7 +18,7 @@ namespace BrainTraining.Model.Tasks {
             var result = new Button {
                 Height = parent.Height / 8,
                 Width = parent.Width / 2,
-                Font = new Font("Microsoft Sans Serif", 25.25F, FontStyle.Regular, GraphicsUnit.Point, 204),
+                Font = ControlHelper.BigFont,
             };
             return result;
         }
@@ -28,12 +28,12 @@ namespace BrainTraining.Model.Tasks {
 
             var label1 = new Label {
                 AutoSize = true,
-                Font = new Font("Microsoft Sans Serif", 25.25F, FontStyle.Regular, GraphicsUnit.Point, 204),
+                Font = ControlHelper.BigFont,
                 Text = "Главное меню"
             };
             var label2 = new Label {
                 AutoSize = true,
-                Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 204),
+                Font = ControlHelper.SmallFont,
                 Text = "Brain Training"
             };
 
