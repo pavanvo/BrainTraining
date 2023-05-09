@@ -1,5 +1,4 @@
 ﻿using BrainTraining.Helpers;
-using BrainTraining.Model.UI;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,6 +7,14 @@ namespace BrainTraining.Model.Tasks {
     internal abstract class BaseTask : ITask {
 
         public abstract string Name { get; }
+        public abstract string Description { get; }
+
+        public virtual int HeaderHeight { get; protected set; } = 15;
+
+        public virtual int ContentHeight { get; protected set; } = 70;
+
+        public virtual int FooterHeight { get; protected set; } = 15;
+
         public MainForm MainForm { get; protected set; }
 
         public Action Setup { get; protected set; } = () => { };
@@ -23,31 +30,29 @@ namespace BrainTraining.Model.Tasks {
 
         protected int minimal { get; set; }
 
-        public virtual int HeaderHeight { get; protected set; } = 15;
-
-        public virtual int ContentHeight { get; protected set; } = 70;
-
-        public virtual int FooterHeight { get; protected set; } = 15;
-
 
         protected BaseTask(MainForm mainForm) {
             MainForm = mainForm;
             minimal = MainForm.Size.Height < MainForm.Size.Width ? MainForm.Size.Height : MainForm.Size.Width;
 
+            mainForm.SuspendLayout();
+
             ButtonBack = getButtonBack();
             Header = getHeader();
             Content = getContent();
             Footer = getFooter();
-           
+
 
             Header.BackColor = Color.Transparent;
             Content.BackColor = Color.Transparent;
             Footer.BackColor = Color.Transparent;
+
+            mainForm.ResumeLayout(false);
         }
 
         protected virtual Panel getHeader() {
             var header = Convert.ToInt32(minimal / 100d * HeaderHeight);
-            var result = new Panel {
+            var result  = new Controls.PanelDoubleBuffered() {
                 Size = new Size(minimal, header)
             };
 
@@ -57,7 +62,7 @@ namespace BrainTraining.Model.Tasks {
 
         protected virtual Panel getContent() {
             var content = Convert.ToInt32(minimal / 100d * ContentHeight);
-            var result = new Panel {
+            var result = new Controls.PanelDoubleBuffered() {
                 Size = new Size(minimal, content),
             };
 
@@ -66,7 +71,7 @@ namespace BrainTraining.Model.Tasks {
 
         protected virtual Panel getFooter() {
             var footer = Convert.ToInt32(minimal / 100d * FooterHeight);
-            var result = new Panel {
+            var result = new Controls.PanelDoubleBuffered() {
                 Size = new Size(minimal, footer)
             };
 

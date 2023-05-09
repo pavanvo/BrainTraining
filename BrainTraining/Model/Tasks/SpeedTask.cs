@@ -3,7 +3,6 @@ using BrainTraining.Model.UI;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,6 +12,7 @@ namespace BrainTraining.Model.Tasks {
         ITask Menu { get; set; }
 
         public override string Name => "Скорость";
+        public override string Description => $"Задание «{Name}» - выберите числа от наименьшего значения к большему.";
 
         static readonly int TableColomns = 6;
         static readonly int TableRows = 6;
@@ -25,7 +25,7 @@ namespace BrainTraining.Model.Tasks {
 
         private int CurrentNumber = 0;
 
-        Label LabelNext = new Label {
+        Label LabelNext = new Controls.GrowLabel {
             Font = ControlHelper.BiggerFont,
             AutoSize = true,
             ForeColor = ControlHelper.Orange,
@@ -125,7 +125,7 @@ namespace BrainTraining.Model.Tasks {
                 if (CurrentNumber == NubresCount) Waiter.Go();
                 else {
                     LabelNext.Text = $"Найдите следующее число: {number + 1}";
-                    LabelNext.Move2Centr();
+                    LabelNext.Move2Centr(0);
                 }
             }
             else {

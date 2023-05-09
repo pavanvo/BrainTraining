@@ -1,32 +1,26 @@
 ﻿using BrainTraining.Helpers;
 using BrainTraining.Model.UI;
-using BrainTraining.Properties;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace BrainTraining.Model.Tasks {
-    internal class RestartTask : BaseTask{
+    internal class RestartTask : BaseTask {
         private ITask Menu { get; set; }
 
         private ITask PreviousTask { get; set; }
 
         public override string Name => "Попробуйте ещё раз";
+        public override string Description => $"{Name}";
 
-        Label labelRestart = new Label {
+        Label labelRestart = new Controls.GrowLabel {
             AutoSize = true,
             Font = ControlHelper.BiggerFont,
         };
 
-        Label labelResult = new Label {
+        Label labelResult = new Controls.GrowLabel {
             AutoSize = true,
             Font = ControlHelper.BiggerFont,
-            
+
         };
 
         public RestartTask(ITask menu, ITask previousTask, string score) : base(menu.MainForm) {
@@ -40,7 +34,7 @@ namespace BrainTraining.Model.Tasks {
                 labelResult.Text = score;
                 labelResult.Move2Centr();
 
-                MainForm.SetupTask(this); 
+                MainForm.SetupTask(this);
             };
 
         }

@@ -1,10 +1,10 @@
-﻿using BrainTraining.Model.UI;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace BrainTraining.Model {
     public interface ITask {
         string Name { get; }
+        string Description { get; }
         MainForm MainForm { get; }
 
         Button ButtonBack { get; }

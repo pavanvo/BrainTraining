@@ -1,17 +1,12 @@
-﻿using BrainTraining.Controls;
-using BrainTraining.Helpers;
+﻿using BrainTraining.Helpers;
 using BrainTraining.Model.UI;
 using BrainTraining.Properties;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace BrainTraining.Model.Tasks {
     internal class AgileTask : BaseTask {
@@ -19,6 +14,7 @@ namespace BrainTraining.Model.Tasks {
         ITask Menu { get; set; }
 
         public override string Name => "Гибкость";
+        public override string Description => $"Задание «{Name}» – сравните название цвета и цвет фигуры, выберите «галочку» если они соответствуют или «крестик» если нет.";
 
         Dictionary<Color, string> Colors = new Dictionary<Color, string>() {
             { Color.Red, "Красный"},
@@ -78,7 +74,7 @@ namespace BrainTraining.Model.Tasks {
         static readonly int TableRows = 3;
 
         TableLayoutPanel Table { get; set; } = ControlHelper.GetTable(TableColomns, TableRows);
-        Label LabelScore = new Label {
+        Label LabelScore = new Controls.GrowLabel {
             Font = ControlHelper.BiggerFont,
             AutoSize = true,
             ForeColor = ControlHelper.Orange,
@@ -158,7 +154,7 @@ namespace BrainTraining.Model.Tasks {
             Table.SuspendLayout();
             Table.Controls.Clear();
 
-            var label = new Label {
+            var label = new Controls.GrowLabel {
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleCenter,
                 Text = color1,

@@ -12,6 +12,7 @@ namespace BrainTraining.Helpers {
         public static readonly Font BiggerFont = new Font("Segoe UI", 30.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
 
         public const int DEFAULT_WIDTH = 500;
+        public const string APP_NAME = "Brain Training";
         public const string RESULT_GOOD = "Поздравляем, вы прошли задание. " + RESULT;
         public const string RESULT_BAD = "Ответ неверный. " + RESULT;
         public const string RESULT = "Результат: ";
@@ -27,7 +28,7 @@ namespace BrainTraining.Helpers {
         }
 
         public static TableLayoutPanel GetTable(int colomns, int rows) {
-            var table = new TableLayoutPanel {
+            var table = new Controls.TableLayoutPanelDoubleBuffered {
                 ColumnCount = colomns,
                 RowCount = rows,
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.InsetDouble,

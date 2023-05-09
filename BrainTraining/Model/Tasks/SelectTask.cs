@@ -1,12 +1,14 @@
 ﻿using BrainTraining.Helpers;
 using BrainTraining.Model.UI;
-using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace BrainTraining.Model.Tasks {
     internal class SelectTask : BaseTask {
 
         public override string Name => "Главное меню";
+        public override string Description => $"{Name}";
         public override int HeaderHeight { get; protected set; } = 25;
         public override int ContentHeight { get; protected set; } = 75;
         public override int FooterHeight { get; protected set; } = 0;
@@ -16,27 +18,21 @@ namespace BrainTraining.Model.Tasks {
 
         }
 
-        private Button getButton(Control parent) {
-            var result = new Button {
-                Height = parent.Height / 8,
-                Width = parent.Width / 2,
-                Font = ControlHelper.BigFont,
-            };
-            return result;
-        }
+        public IList<ITask> Tasks { get; protected set; }
 
         override protected Panel getHeader() {
             var result = base.getHeader();
 
-            var label1 = new Label {
+            var label1 = new Controls.GrowLabel {
                 AutoSize = true,
                 Font = ControlHelper.BigFont,
+                ForeColor = ControlHelper.Orange,
                 Text = Name,
             };
-            var label2 = new Label {
+            var label2 = new Controls.GrowLabel {
                 AutoSize = true,
                 Font = ControlHelper.SmallFont,
-                Text = "Brain Training"
+                Text = ControlHelper.APP_NAME
             };
 
 
@@ -52,33 +48,29 @@ namespace BrainTraining.Model.Tasks {
         override protected Panel getContent() {
             var result = base.getContent();
 
-            var memoryTask = new MemoryTask(this);
-            var memoryButton = getButton(result);
-            memoryButton.Text = memoryTask.Name;
-            memoryButton.Click += (o, e) => { Sound.Play(SoundType.Button); memoryTask.Setup(); };
-            result.Controls.Add(memoryButton);
-            memoryButton.Move2Centr(0);
+            Tasks = new List<ITask>() {
+                new MemoryTask(this),
+                new AgileTask(this),
+                new SpeedTask(this),
+                new RulesTask(this),
+            };
 
-            var agileTask = new AgileTask(this);
-            var agile = getButton(result);
-            agile.Text = agileTask.Name;
-            agile.Click += (o, e) => { Sound.Play(SoundType.Button); agileTask.Setup(); };
-            result.Controls.Add(agile);
-            agile.Move2Centr(25);
+            var height = 0;
 
-            var speedTask = new SpeedTask(this);
-            var speedButton = getButton(result);
-            speedButton.Text = speedTask.Name;
-            speedButton.Click += (o, e) => { Sound.Play(SoundType.Button); speedTask.Setup(); };
-            result.Controls.Add(speedButton);
-            speedButton.Move2Centr(50);
+            foreach (var task in Tasks) {
 
-            var rulesTask = new RulesTask(this);
-            var rulesButton = getButton(result);
-            rulesButton.Text = rulesTask.Name;
-            rulesButton.Click += (o, e) => { Sound.Play(SoundType.Button); rulesTask.Setup(); };
-            result.Controls.Add(rulesButton);
-            rulesButton.Move2Centr(75);
+                var button = new Button {
+                    Height = result.Height / 8,
+                    Width = result.Width / 2,
+                    Font = ControlHelper.BigFont,
+                };
+
+                button.Text = task.Name;
+                button.Click += (o, e) => { Sound.Play(SoundType.Button); task.Setup(); };
+                result.Controls.Add(button);
+                button.Move2Centr(height);
+                height += 100 / Tasks.Count;
+            }
 
             return result;
         }

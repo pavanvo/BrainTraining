@@ -1,25 +1,21 @@
 ﻿using BrainTraining.Controls;
 using BrainTraining.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Forms;
 
 namespace BrainTraining.Model.UI {
     public class Waiter {
-        public readonly ProgressBar ProgressBar = new PavanvoBar {
+        public readonly ProgressBar ProgressBar = new GoodProgressBarBar {
             Width = ControlHelper.DEFAULT_WIDTH,
             ForeColor = ControlHelper.Blue,
             BackColor = Color.WhiteSmoke
         };
 
-        public readonly Label LabelTime = new Label {
+        public readonly Label LabelTime = new Controls.GrowLabel {
             Font = ControlHelper.BiggerFont,
             AutoSize = true,
             ForeColor = ControlHelper.Orange,

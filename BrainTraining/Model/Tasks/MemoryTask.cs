@@ -1,17 +1,18 @@
 ﻿using BrainTraining.Helpers;
+using BrainTraining.Model.UI;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
-using System;
-using System.Threading.Tasks;
 using System.Threading;
-using BrainTraining.Model.UI;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BrainTraining.Model.Tasks {
     internal class MemoryTask : BaseTask {
         ITask Menu { get; set; }
 
         public override string Name => "Память";
+        public override string Description => $"Задание «{Name}» – запомните расположение цветных блоков, затем выберите их. ";
 
         static readonly int TableColomns = 6;
         static readonly int TableRows = 6;
@@ -53,7 +54,7 @@ namespace BrainTraining.Model.Tasks {
         private int CurrentBlue = 0;
         private int LavelBlue = 0;
 
-        Label LabelScore = new Label {
+        Label LabelScore = new Controls.GrowLabel {
             Font = ControlHelper.BiggerFont,
             AutoSize = true,
             ForeColor = ControlHelper.Orange,

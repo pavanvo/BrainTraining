@@ -1,11 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 namespace BrainTraining.Controls {
-    public class PavanvoBar : ProgressBar {
-        public PavanvoBar() {
+    public class GoodProgressBarBar : ProgressBar {
+        public GoodProgressBarBar() {
             this.SetStyle(ControlStyles.UserPaint, true);
         }
 

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using BrainTraining.Properties;
+using System.Collections.Generic;
 using System.Media;
-using BrainTraining.Properties;
 
 namespace BrainTraining.Model.UI {
     enum SoundType {

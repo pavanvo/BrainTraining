@@ -9,7 +9,7 @@ namespace BrainTraining.Helpers {
         public static void FillSquare(this PaintEventArgs e, Color color) {
             var rect = e.ClipRectangle;
             var minimal = rect.Height < rect.Width ? rect.Height : rect.Width;
-            e.Graphics.FillRectangle(new SolidBrush(color), (rect.Width - minimal)/ 2F, (rect.Height - minimal) / 2F, minimal, minimal);
+            e.Graphics.FillRectangle(new SolidBrush(color), (rect.Width - minimal) / 2F, (rect.Height - minimal) / 2F, minimal, minimal);
         }
 
         public static void FillTriangle(this PaintEventArgs e, Color color) {

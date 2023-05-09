@@ -47,7 +47,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\PavanvoBar.cs">
+    <Compile Include="Controls\GrowLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PanelDoubleBuffered.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\GoodProgressBarBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TableLayoutPanelDoubleBuffered.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Helpers\ControlHelper.cs" />
