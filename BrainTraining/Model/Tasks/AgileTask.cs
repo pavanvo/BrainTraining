@@ -26,7 +26,7 @@ namespace BrainTraining.Model.Tasks {
         };
 
         Dictionary<int, int> Levels = new Dictionary<int, int>() {
-            { 1, 1},
+            { 1, 15},
             { 2, 14},
             { 3, 14},
             { 4, 14},
