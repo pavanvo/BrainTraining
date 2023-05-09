@@ -12,8 +12,8 @@ namespace BrainTraining {
             var angle = new Random().Next(0, 180);
             this.Paint += (o, e) => e.Graphics.FillRectangle(new LinearGradientBrush(Bounds, ControlHelper.Blue, Color.FromArgb(0, 0, 0), angle), Bounds);
             MaximizeBox = false;
-            //TopMost = true;
-            //FormBorderStyle = FormBorderStyle.None;
+            TopMost = true;
+            FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
         }
 

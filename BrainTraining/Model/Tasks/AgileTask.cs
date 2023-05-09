@@ -81,7 +81,7 @@ namespace BrainTraining.Model.Tasks {
         Label LabelScore = new Label {
             Font = ControlHelper.BiggerFont,
             AutoSize = true,
-            ForeColor = Color.DarkRed,
+            ForeColor = ControlHelper.Orange,
         };
 
 
@@ -110,10 +110,11 @@ namespace BrainTraining.Model.Tasks {
             if (result) {
                 Sound.Play(SoundType.Win);
             }
-            else {
-                var restarttask = new RestartTask(Menu, this, LabelScore.Text);//TODO get Scorefrom Level
-                restarttask.Setup();
-            }
+            var text = result ? ControlHelper.RESULT_GOOD : ControlHelper.RESULT_BAD;
+            var score = $"{text} {LabelScore.Text}";
+
+            var restarttask = new RestartTask(Menu, this, score);//TODO get Scorefrom Level
+            restarttask.Setup();
         }
 
         private async Task<bool> SetLevel(KeyValuePair<int, int> lvl) {

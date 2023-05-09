@@ -37,7 +37,7 @@ namespace BrainTraining.Model.Tasks {
                 labelRestart.Text = Name;
                 labelRestart.Move2Centr();
 
-                labelResult.Text = $"Результат: {score}";
+                labelResult.Text = score;
                 labelResult.Move2Centr();
 
                 MainForm.SetupTask(this); 

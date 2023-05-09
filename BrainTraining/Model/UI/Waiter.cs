@@ -14,17 +14,15 @@ using System.Windows.Forms;
 namespace BrainTraining.Model.UI {
     public class Waiter {
         public readonly ProgressBar ProgressBar = new PavanvoBar {
-            Width = ControlHelper.DefaultWidth,
+            Width = ControlHelper.DEFAULT_WIDTH,
             ForeColor = ControlHelper.Blue,
             BackColor = Color.WhiteSmoke
         };
 
         public readonly Label LabelTime = new Label {
             Font = ControlHelper.BiggerFont,
-            TextAlign = ContentAlignment.MiddleCenter,
-            Height = 40,
-            Width = ControlHelper.DefaultWidth,
-            ForeColor = Color.DarkRed,
+            AutoSize = true,
+            ForeColor = ControlHelper.Orange,
         };
 
         public string TimeFormat { get; set; } = "ss";
@@ -55,6 +53,9 @@ namespace BrainTraining.Model.UI {
                 };
             }
             if (label) {
+                LabelTime.Text = stopWatch.Elapsed.ToString(TimeFormat);
+                LabelTime.Move2Centr();
+
                 timer.Elapsed += (o, e) => {
                     var time = stopWatch.Elapsed;
                     if (timeout != 0) time = TimeSpan.FromMilliseconds(timeout) - stopWatch.Elapsed;

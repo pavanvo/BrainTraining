@@ -25,10 +25,16 @@ namespace BrainTraining.Model.Tasks {
 
         private int CurrentNumber = 0;
 
+        Label LabelNext = new Label {
+            Font = ControlHelper.BiggerFont,
+            AutoSize = true,
+            ForeColor = ControlHelper.Orange,
+        };
+
         public SpeedTask(ITask menu) : base(menu.MainForm) {
             Menu = menu;
             Waiter.TimeFormat = @"mm\:ss\:ff";
-           
+
 
             Setup = async () => {
                 Table.Hide();
@@ -43,10 +49,11 @@ namespace BrainTraining.Model.Tasks {
             if (result) {
                 Sound.Play(SoundType.Win);
             }
-            else {
-                var restarttask = new RestartTask(Menu, this, $"{CurrentNumber} за {Waiter.LabelTime.Text}");//TODO get Scorefrom Level
-                restarttask.Setup();
-            }
+            var text = result ? ControlHelper.RESULT_GOOD : ControlHelper.RESULT_BAD;
+            var score = $"{text} {CurrentNumber} за {Waiter.LabelTime.Text}";
+
+            var restarttask = new RestartTask(Menu, this, score);//TODO get Scorefrom Level
+            restarttask.Setup();
         }
 
         private async Task<bool> SetLevel() {
@@ -114,7 +121,12 @@ namespace BrainTraining.Model.Tasks {
                 CurrentNumber = number;
                 Sound.Play(SoundType.Good);
                 button.BackColor = ControlHelper.Blue;
+
                 if (CurrentNumber == NubresCount) Waiter.Go();
+                else {
+                    LabelNext.Text = $"Найдите следующее число: {number + 1}";
+                    LabelNext.Move2Centr();
+                }
             }
             else {
                 Sound.Play(SoundType.Error);
@@ -133,7 +145,6 @@ namespace BrainTraining.Model.Tasks {
             var result = base.getHeader();
 
             result.Controls.Add(Waiter.LabelTime);
-            Waiter.LabelTime.Move2Centr(80);
 
             return result;
         }
@@ -150,6 +161,8 @@ namespace BrainTraining.Model.Tasks {
 
         override protected Panel getFooter() {
             var result = base.getFooter();
+
+            result.Controls.Add(LabelNext);
 
             return result;
         }

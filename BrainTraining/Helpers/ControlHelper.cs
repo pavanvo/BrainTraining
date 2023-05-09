@@ -6,10 +6,15 @@ namespace BrainTraining.Helpers {
     internal static class ControlHelper {
 
         public static readonly Color Blue = Color.FromArgb(64, 176, 255);
+        public static readonly Color Orange = Color.OrangeRed;
         public static readonly Font SmallFont = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
         public static readonly Font BigFont = new Font("Segoe Script", 25.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
         public static readonly Font BiggerFont = new Font("Segoe UI", 30.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-        public static readonly int DefaultWidth = 500;
+
+        public const int DEFAULT_WIDTH = 500;
+        public const string RESULT_GOOD = "Поздравляем, вы прошли задание. " + RESULT;
+        public const string RESULT_BAD = "Ответ неверный. " + RESULT;
+        public const string RESULT = "Результат: ";
 
         public static void Move2Centr(this Control control, float topPercent) {
             control.Left = (control.Parent.Width - control.Width) / 2;
@@ -33,7 +38,7 @@ namespace BrainTraining.Helpers {
             for (int i = 0; i < rows; i++) {
                 table.RowStyles.Add(new RowStyle(SizeType.Percent, 100F / rows));
             }
-            table.Size = new Size(DefaultWidth, DefaultWidth);
+            table.Size = new Size(DEFAULT_WIDTH, DEFAULT_WIDTH);
 
             return table;
         }
