@@ -12,6 +12,8 @@ namespace BrainTraining.Model.Tasks {
 
         SelectTask Menu { get; set; }
 
+        public override string Name => "Скорость";
+
         static readonly int TableColomns = 6;
         static readonly int TableRows = 6;
 
@@ -19,15 +21,18 @@ namespace BrainTraining.Model.Tasks {
         static readonly int NubresCount = TableColomns * TableRows;
         TableLayoutPanel Table { get; set; } = ControlHelper.GetTable(TableColomns, TableRows);
 
-        private ManualResetEvent mre;
+        private Waiter Waiter = new Waiter();
 
         private int CurrentNumber = 0;
 
         public SpeedTask(SelectTask menu) : base(menu.MainForm) {
             Menu = menu;
+            Waiter.TimeFormat = @"mm\:ss\:ff";
+           
 
             Setup = async () => {
                 Table.Hide();
+                Waiter.LabelTime.Hide();
                 MainForm.SetupTask(this);
                 await Start();
             };
@@ -35,8 +40,9 @@ namespace BrainTraining.Model.Tasks {
 
         private async Task Start() {
             var result = await SetLevel();
-            if (result)
+            if (result) {
                 Sound.Play(SoundType.Win);
+            }
             else {
                 //TODO restart
             }
@@ -47,10 +53,10 @@ namespace BrainTraining.Model.Tasks {
             var points = GenerateLevel();
 
             FillTable(points);
+            Waiter.LabelTime.Show();
             Table.Show();
 
-            mre = new ManualResetEvent(false);
-            await Task.Run(() => mre.WaitOne());
+            await Waiter.Wait(label: true);
 
             return CurrentNumber == NubresCount;
         }
@@ -107,11 +113,11 @@ namespace BrainTraining.Model.Tasks {
                 CurrentNumber = number;
                 Sound.Play(SoundType.Good);
                 button.BackColor = ControlHelper.Blue;
-                if (CurrentNumber == NubresCount) mre.Set();
+                if (CurrentNumber == NubresCount) Waiter.Go();
             }
             else {
                 Sound.Play(SoundType.Error);
-                mre.Set();
+                Waiter.Go();
             }
         }
 
@@ -124,6 +130,9 @@ namespace BrainTraining.Model.Tasks {
 
         override protected Panel getHeader() {
             var result = base.getHeader();
+
+            result.Controls.Add(Waiter.LabelTime);
+            Waiter.LabelTime.Move2Centr(80);
 
             return result;
         }
@@ -148,7 +157,7 @@ namespace BrainTraining.Model.Tasks {
             var result = base.getButtonBack();
 
             result.Text = "В меню";
-            result.Click += (o, e) => { Sound.Play(SoundType.Button); Menu.Setup(); };
+            result.Click += (o, e) => { Waiter.Stop(); Sound.Play(SoundType.Button); Menu.Setup(); };
 
             return result;
         }

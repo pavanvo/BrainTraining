@@ -17,6 +17,8 @@ namespace BrainTraining.Model.Tasks {
     internal class AgileTask : BaseTask {
         SelectTask Menu { get; set; }
 
+        public override string Name => "Гибкость";
+
         Dictionary<Color, string> Colors = new Dictionary<Color, string>() {
             { Color.Red, "Красный"},
             { Color.Green, "Зелёный"},
@@ -75,9 +77,16 @@ namespace BrainTraining.Model.Tasks {
         static readonly int TableRows = 3;
 
         TableLayoutPanel Table { get; set; } = ControlHelper.GetTable(TableColomns, TableRows);
+        Label LabelScore = new Label {
+            Font = ControlHelper.BiggerFont,
+            TextAlign = ContentAlignment.MiddleCenter,
+            Height = 50,
+            Width = ControlHelper.DefaultWidth,
+            ForeColor = Color.DarkRed,
+        };
 
-        ProgressBar PavanvoBar = new PavanvoBar { Width = ControlHelper.DefaultWidth, ForeColor = ControlHelper.Blue, BackColor = Color.WhiteSmoke };
-        private ManualResetEvent mre;
+
+        Waiter Waiter = new Waiter();
         private bool? Answer = null;
 
         public AgileTask(SelectTask menu) : base(menu.MainForm) {
@@ -92,42 +101,27 @@ namespace BrainTraining.Model.Tasks {
         }
 
         private async Task Start() {
+            var result = false;
             foreach (var lvl in Levels) {
-                var result = false;
-                //do {
                 result = await SetLevel(lvl);
-                //}
-                //while (!result);
+                if (!result) {
+                    break;
+                }
             }
-            Sound.Play(SoundType.Win);
+            if (result) {
+                Sound.Play(SoundType.Win);
+            }
+            else {
+
+            }
+            // При неправильном выборе высвечивается окно, в котором написано – 
+            //Ответ неверный. И ниже предложено начать заново или войти в главное меню.
         }
 
         private async Task<bool> SetLevel(KeyValuePair<int, int> lvl) {
             var speed = lvl.Value * 1000;
+            LabelScore.Text = lvl.Key + "";
             Answer = null;
-            PavanvoBar.Value = 0;
-            PavanvoBar.Maximum = speed;
-
-            Stopwatch stopWatch = new Stopwatch();
-            var timer = new System.Timers.Timer();
-            timer.Elapsed += (o, e) => {
-                var elapsed = Convert.ToInt32(stopWatch.ElapsedMilliseconds);
-                PavanvoBar.Invoke(new Action(() => PavanvoBar.Value = elapsed));
-                if (elapsed > speed) {
-                    Sound.Play(SoundType.TimeIsUp);
-                    mre.Set();
-                }
-            };
-            timer.Interval = 10;
-            void start() {
-                stopWatch.Start();
-                timer.Start();
-            }
-            void stop() {
-                stopWatch.Stop();
-                timer.Stop();
-            }
-
 
             var random = new Random();
 
@@ -141,12 +135,7 @@ namespace BrainTraining.Model.Tasks {
             var answerBox = FillTable(color1.Value, color2.Key, color3.Key, figura.Value);
             Table.Show();
 
-            start();
-
-
-            mre = new ManualResetEvent(false);
-            await Task.Run(() => mre.WaitOne());
-            stop();
+            await Waiter.Wait(timeout: speed);
 
             if (Answer == null) return false;
 
@@ -197,18 +186,24 @@ namespace BrainTraining.Model.Tasks {
 
         private void Yes_Click(object sender, EventArgs e) {
             Answer = true;
-            mre.Set();
+            Waiter.Go();
         }
         private void No_Click(object sender, EventArgs e) {
             Answer = false;
-            mre.Set();
+            Waiter.Go();
         }
 
         override protected Panel getHeader() {
             var result = base.getHeader();
 
-            result.Controls.Add(PavanvoBar);
-            PavanvoBar.Move2Centr();
+            result.Controls.Add(LabelScore);
+            LabelScore.Move2Centr(0);
+
+            result.Controls.Add(Waiter.ProgressBar);
+            Waiter.ProgressBar.Move2Centr(50);
+
+            //result.Controls.Add(Waiter.LabelTime);
+            //Waiter.LabelTime.Move2Centr(80);
 
             return result;
         }
@@ -253,8 +248,8 @@ namespace BrainTraining.Model.Tasks {
         override protected Button getButtonBack() {
             var result = base.getButtonBack();
 
-            result.Text = "В меню";//TODO Stop
-            result.Click += (o, e) => { Sound.Play(SoundType.Button); Menu.Setup(); };
+            result.Text = "В меню";
+            result.Click += (o, e) => { Waiter.Stop(); Sound.Play(SoundType.Button); Menu.Setup(); };
 
             return result;
         }

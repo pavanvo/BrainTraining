@@ -11,6 +11,8 @@ namespace BrainTraining.Model.Tasks {
     internal class MemoryTask : BaseTask {
         SelectTask Menu { get; set; }
 
+        public override string Name => "Память";
+
         static readonly int TableColomns = 6;
         static readonly int TableRows = 6;
         static readonly int MemoryPause = 2000;
@@ -51,6 +53,14 @@ namespace BrainTraining.Model.Tasks {
         private int CurrentBlue = 0;
         private int LavelBlue = 0;
 
+        Label LabelScore = new Label {
+            Font = ControlHelper.BiggerFont,
+            TextAlign = ContentAlignment.MiddleCenter,
+            Height = 40,
+            Width = ControlHelper.DefaultWidth,
+            ForeColor = Color.DarkRed,
+        };
+
         public MemoryTask(SelectTask menu) : base(menu.MainForm) {
             Menu = menu;
 
@@ -62,18 +72,25 @@ namespace BrainTraining.Model.Tasks {
         }
 
         private async Task Start() {
+            var result = false;
             foreach (var lvl in Levels) {
-                var result = false;
-                do {
-                    result = await SetLevel(lvl);
+
+                result = await SetLevel(lvl);
+                if (!result) {
+                    break;
                 }
-                while (!result);
             }
-            Sound.Play(SoundType.Win);
+            if (result) {
+                Sound.Play(SoundType.Win);
+            }
+            else {
+                //TODO restart
+            }
         }
 
         private async Task<bool> SetLevel(KeyValuePair<int, int> lvl) {
             LavelBlue = lvl.Value;
+            LabelScore.Text = lvl.Key + "";
             CurrentBlue = 0;
             var points = GenerateLevel(LavelBlue);
 
@@ -163,6 +180,9 @@ namespace BrainTraining.Model.Tasks {
 
         override protected Panel getHeader() {
             var result = base.getHeader();
+
+            result.Controls.Add(LabelScore);
+            LabelScore.Move2Centr(80);
 
             return result;
         }

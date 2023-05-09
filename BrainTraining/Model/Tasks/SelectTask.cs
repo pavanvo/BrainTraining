@@ -5,6 +5,8 @@ using System.Windows.Forms;
 
 namespace BrainTraining.Model.Tasks {
     internal class SelectTask : BaseTask {
+
+        public override string Name => "Главное меню";
         public override int HeaderHeight { get; protected set; } = 25;
         public override int ContentHeight { get; protected set; } = 75;
         public override int FooterHeight { get; protected set; } = 0;
@@ -29,7 +31,7 @@ namespace BrainTraining.Model.Tasks {
             var label1 = new Label {
                 AutoSize = true,
                 Font = ControlHelper.BigFont,
-                Text = "Главное меню"
+                Text = Name,
             };
             var label2 = new Label {
                 AutoSize = true,
@@ -52,28 +54,28 @@ namespace BrainTraining.Model.Tasks {
 
             var memoryTask = new MemoryTask(this);
             var memoryButton = getButton(result);
-            memoryButton.Text = "Память";
+            memoryButton.Text = memoryTask.Name;
             memoryButton.Click += (o, e) => { Sound.Play(SoundType.Button); memoryTask.Setup(); };
             result.Controls.Add(memoryButton);
             memoryButton.Move2Centr(0);
 
             var agileTask = new AgileTask(this);
             var agile = getButton(result);
-            agile.Text = "Гибкость";
+            agile.Text = agileTask.Name;
             agile.Click += (o, e) => { Sound.Play(SoundType.Button); agileTask.Setup(); };
             result.Controls.Add(agile);
             agile.Move2Centr(25);
 
             var speedTask = new SpeedTask(this);
             var speedButton = getButton(result);
-            speedButton.Text = "Скорость";
+            speedButton.Text = speedTask.Name;
             speedButton.Click += (o, e) => { Sound.Play(SoundType.Button); speedTask.Setup(); };
             result.Controls.Add(speedButton);
             speedButton.Move2Centr(50);
 
             var rulesTask = new RulesTask(this);
             var rulesButton = getButton(result);
-            rulesButton.Text = "Правила";
+            rulesButton.Text = rulesTask.Name;
             rulesButton.Click += (o, e) => { Sound.Play(SoundType.Button); rulesTask.Setup(); };
             result.Controls.Add(rulesButton);
             rulesButton.Move2Centr(75);

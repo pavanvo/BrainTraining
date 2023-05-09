@@ -6,8 +6,9 @@ namespace BrainTraining.Helpers {
     internal static class ControlHelper {
 
         public static readonly Color Blue = Color.FromArgb(64, 176, 255);
-        public static readonly Font SmallFont = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-        public static readonly Font BigFont = new Font("Microsoft Sans Serif", 25.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+        public static readonly Font SmallFont = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+        public static readonly Font BigFont = new Font("Segoe Script", 25.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+        public static readonly Font BiggerFont = new Font("Segoe UI", 30.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
         public static readonly int DefaultWidth = 500;
 
         public static void Move2Centr(this Control control, float topPercent) {
@@ -24,7 +25,7 @@ namespace BrainTraining.Helpers {
             var table = new TableLayoutPanel {
                 ColumnCount = colomns,
                 RowCount = rows,
-                CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
+                CellBorderStyle = TableLayoutPanelCellBorderStyle.InsetDouble,
             };
             for (int i = 0; i < colomns; i++) {
                 table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F / colomns));

@@ -27,7 +27,6 @@
             this.Footer = new System.Windows.Forms.Panel();
             this.Content = new System.Windows.Forms.Panel();
             this.Header = new System.Windows.Forms.Panel();
-            this.ButtonBack = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Footer
@@ -54,29 +53,18 @@
             this.Header.Size = new System.Drawing.Size(399, 115);
             this.Header.TabIndex = 0;
             // 
-            // ButtonBack
-            // 
-            this.ButtonBack.Location = new System.Drawing.Point(13, 13);
-            this.ButtonBack.Name = "ButtonBack";
-            this.ButtonBack.Size = new System.Drawing.Size(95, 53);
-            this.ButtonBack.TabIndex = 1;
-            this.ButtonBack.Text = "Back";
-            this.ButtonBack.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(670, 641);
             this.Controls.Add(this.Footer);
-            this.Controls.Add(this.ButtonBack);
             this.Controls.Add(this.Content);
             this.Controls.Add(this.Header);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Brain Training";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.ResumeLayout(false);
 
         }
@@ -85,7 +73,6 @@
         private System.Windows.Forms.Panel Footer;
         private System.Windows.Forms.Panel Content;
         private System.Windows.Forms.Panel Header;
-        public System.Windows.Forms.Button ButtonBack;
     }
 }
 

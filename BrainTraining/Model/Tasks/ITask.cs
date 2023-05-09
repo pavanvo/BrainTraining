@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 namespace BrainTraining.Model {
     public interface ITask {
+        string Name { get; }
         MainForm MainForm { get; }
 
         Button ButtonBack { get; }

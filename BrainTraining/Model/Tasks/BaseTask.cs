@@ -1,10 +1,13 @@
-﻿using BrainTraining.Model.UI;
+﻿using BrainTraining.Helpers;
+using BrainTraining.Model.UI;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace BrainTraining.Model.Tasks {
     internal abstract class BaseTask : ITask {
+
+        public abstract string Name { get; }
         public MainForm MainForm { get; protected set; }
 
         public Action Setup { get; protected set; } = () => { };
@@ -20,23 +23,26 @@ namespace BrainTraining.Model.Tasks {
 
         protected int minimal { get; set; }
 
-        public virtual int HeaderHeight { get; protected set; } = 25;
+        public virtual int HeaderHeight { get; protected set; } = 15;
 
-        public virtual int ContentHeight { get; protected set; } = 50;
+        public virtual int ContentHeight { get; protected set; } = 70;
 
-        public virtual int FooterHeight { get; protected set; } = 25;
+        public virtual int FooterHeight { get; protected set; } = 15;
 
 
         protected BaseTask(MainForm mainForm) {
             MainForm = mainForm;
             minimal = MainForm.Size.Height < MainForm.Size.Width ? MainForm.Size.Height : MainForm.Size.Width;
 
+            ButtonBack = getButtonBack();
             Header = getHeader();
             Content = getContent();
             Footer = getFooter();
-            ButtonBack = getButtonBack();
+           
 
-
+            Header.BackColor = Color.Transparent;
+            Content.BackColor = Color.Transparent;
+            Footer.BackColor = Color.Transparent;
         }
 
         protected virtual Panel getHeader() {
@@ -45,6 +51,7 @@ namespace BrainTraining.Model.Tasks {
                 Size = new Size(minimal, header)
             };
 
+            result.Controls.Add(ButtonBack);
             return result;
         }
 
@@ -68,7 +75,11 @@ namespace BrainTraining.Model.Tasks {
 
         protected virtual Button getButtonBack() {
             var result = new Button {
-                Bounds = MainForm.ButtonBack.Bounds,
+                Location = new Point(13, 13),
+                Size = new Size(150, 150),
+                Font = ControlHelper.BigFont,
+                Text = "Назад",
+                UseVisualStyleBackColor = true,
             };
             return result;
         }

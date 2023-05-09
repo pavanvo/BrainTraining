@@ -5,6 +5,7 @@ namespace BrainTraining.Model.Tasks {
     internal class RulesTask : BaseTask {
 
         SelectTask Menu { get; set; }
+        public override string Name => "Правила";
 
         public RulesTask(SelectTask menu) : base(menu.MainForm) {
             Menu = menu;
