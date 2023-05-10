@@ -23,13 +23,13 @@ namespace BrainTraining.Model.Tasks {
         override protected Panel getHeader() {
             var result = base.getHeader();
 
-            var label1 = new Controls.GrowLabel {
+            var label1 = new GrowLabel {
                 AutoSize = true,
                 Font = ControlHelper.BigFont,
                 ForeColor = ControlHelper.Orange,
                 Text = Name,
             };
-            var label2 = new Controls.GrowLabel {
+            var label2 = new GrowLabel {
                 AutoSize = true,
                 Font = ControlHelper.SmallFont,
                 Text = ControlHelper.APP_NAME

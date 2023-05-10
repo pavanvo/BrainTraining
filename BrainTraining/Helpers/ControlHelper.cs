@@ -1,20 +1,35 @@
-﻿using System;
+﻿using BrainTraining.Properties;
+using System;
 using System.Drawing;
+using System.Drawing.Text;
+using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace BrainTraining.Helpers {
     internal static class ControlHelper {
 
+        static PrivateFontCollection pfc = AddFontFromMemory();
+
+        static private PrivateFontCollection AddFontFromMemory() {
+            var result = new PrivateFontCollection();
+            var fontBytes =Resources.AlumniSansPinstripe_Regular;
+            var fontData = Marshal.AllocCoTaskMem(fontBytes.Length);
+            Marshal.Copy(fontBytes, 0, fontData, fontBytes.Length);
+            result.AddMemoryFont(fontData, fontBytes.Length);
+            return result;
+        }
+
         public static readonly Color Blue = Color.FromArgb(64, 176, 255);
         public static readonly Color Orange = Color.OrangeRed;
-        public static readonly Font SmallFont = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-        public static readonly Font BigFont = new Font("Segoe Script", 25.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
-        public static readonly Font BiggerFont = new Font("Segoe UI", 30.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+        public static readonly Font SmallFont = new Font(pfc.Families[0], 20.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+        public static readonly Font BigFont = new Font(pfc.Families[0], 25.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+        public static readonly Font BiggerFont = new Font(pfc.Families[0], 30.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
 
         public const int DEFAULT_WIDTH = 500;
         public const string APP_NAME = "Brain Training";
-        public const string RESULT_GOOD = "Поздравляем, вы прошли задание. " + RESULT;
-        public const string RESULT_BAD = "Ответ неверный. " + RESULT;
+        public const string RESULT_GOOD = "Поздравляем, вы прошли задание. \r\n" + RESULT;
+        public const string RESULT_BAD = "Ответ неверный. \r\n" + RESULT;
         public const string RESULT = "Результат: ";
 
         public static void Move2Centr(this Control control, float topPercent) {

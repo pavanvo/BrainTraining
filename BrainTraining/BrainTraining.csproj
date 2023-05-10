@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>20230505_212644.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -116,6 +119,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\AlumniSansPinstripe-Regular.ttf" />
     <None Include="Resources\Звук 2.wav" />
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +134,7 @@
   <ItemGroup>
     <None Include="Resources\redCross.png" />
     <None Include="Resources\greenCheck.png" />
+    <Content Include="20230505_212644.ico" />
     <Content Include="Resources\switch-sound.wav" />
     <None Include="Resources\Звук 1.wav" />
   </ItemGroup>

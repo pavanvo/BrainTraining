@@ -92,6 +92,9 @@ namespace BrainTraining.Model.Tasks {
                 Table.Hide();
                 Table.CellBorderStyle = TableLayoutPanelCellBorderStyle.None;
                 MainForm.SetupTask(this);
+
+                Table.BackColor = Color.Silver;
+
                 await Start();
             };
         }
@@ -207,6 +210,7 @@ namespace BrainTraining.Model.Tasks {
 
         override protected Panel getContent() {
             var result = base.getContent();
+
 
             result.Controls.Add(Table);
 
