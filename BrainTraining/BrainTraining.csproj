@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="MainForm.Logic.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Model\Tasks\AgileTask.cs" />
     <Compile Include="Model\Tasks\BaseTask.cs" />
