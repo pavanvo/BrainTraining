@@ -67,9 +67,6 @@
     </Compile>
     <Compile Include="Helpers\ControlHelper.cs" />
     <Compile Include="Helpers\GraphicsHelper.cs" />
-    <Compile Include="MainForm.Logic.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
