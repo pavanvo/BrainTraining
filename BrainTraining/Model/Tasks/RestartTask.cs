@@ -1,7 +1,6 @@
 ﻿using BrainTraining.Controls;
 using BrainTraining.Helpers;
 using BrainTraining.Model.UI;
-using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 

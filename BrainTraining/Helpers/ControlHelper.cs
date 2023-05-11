@@ -25,7 +25,7 @@ namespace BrainTraining.Helpers {
 
         private static PrivateFontCollection AddFontFromMemory() {
             var result = new PrivateFontCollection();
-            var fontBytes =Resources.AlumniSansPinstripe_Regular;
+            var fontBytes = Resources.AlumniSansPinstripe_Regular;
             var fontData = Marshal.AllocCoTaskMem(fontBytes.Length);
             Marshal.Copy(fontBytes, 0, fontData, fontBytes.Length);
             result.AddMemoryFont(fontData, fontBytes.Length);

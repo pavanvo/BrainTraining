@@ -1,5 +1,4 @@
 ﻿using BrainTraining.Controls;
-using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -63,7 +62,5 @@ namespace BrainTraining.Model {
         /// Функция Установки Задачи
         /// </summary>
         Task Setup();
-
-
     }
 }

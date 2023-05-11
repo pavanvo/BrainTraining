@@ -78,7 +78,7 @@ namespace BrainTraining.Model.Tasks {
         /// Таблица
         /// </summary>
         TableLayoutPanel Table { get; set; } = ControlHelper.GetTable(TableColomns, TableRows);
-        
+
         /// <summary>
         /// Лэйбл для очков
         /// </summary>
@@ -260,7 +260,7 @@ namespace BrainTraining.Model.Tasks {
                 Dock = DockStyle.Left,
                 ButtonBorderColor = ControlHelper.Blue,
             };
-            
+
             no.Click += No_Click;
 
             result.Controls.Add(yes);
