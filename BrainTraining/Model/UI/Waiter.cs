@@ -8,14 +8,26 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BrainTraining.Model.UI {
+
+    /// <summary>
+    /// Класс для Ожидания пользовательского ввода,
+    /// отображения ожидания
+    /// </summary>
     public class Waiter {
+
+        /// <summary>
+        /// Прогресс бар
+        /// </summary>
         public readonly ProgressBar ProgressBar = new GoodProgressBarBar {
             Width = ControlHelper.DEFAULT_WIDTH,
             ForeColor = ControlHelper.Blue,
             BackColor = Color.WhiteSmoke
         };
 
-        public readonly Label LabelTime = new Controls.GrowLabel {
+        /// <summary>
+        /// Лейбл времени
+        /// </summary>
+        public readonly Label LabelTime = new GrowLabel {
             Font = ControlHelper.BiggerFont,
             AutoSize = true,
             ForeColor = ControlHelper.Orange,
@@ -27,7 +39,9 @@ namespace BrainTraining.Model.UI {
         private Stopwatch stopWatch;
         private System.Timers.Timer timer;
 
-
+        /// <summary>
+        /// Ожидание получения пользователького ввода
+        /// </summary>
         public async Task Wait(int timeout = 0, bool label = false) {
             stopWatch = new Stopwatch();
             timer = new System.Timers.Timer();
@@ -64,15 +78,21 @@ namespace BrainTraining.Model.UI {
             stopWatch.Start();
             timer.Start();
 
-
             await Task.Run(() => mre.WaitOne());
         }
+
+        /// <summary>
+        /// Сигнал получения пользователького ввода
+        /// </summary>
         public void Go() {
             stopWatch.Stop();
             timer.Stop();
             mre.Set();
         }
 
+        /// <summary>
+        /// Остановка ожидания
+        /// </summary>
         public void Stop() {
             stopWatch.Stop();
             timer.Stop();

@@ -93,15 +93,6 @@ namespace BrainTraining.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream switch_sound {
-            get {
-                return ResourceManager.GetStream("switch_sound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
         internal static System.IO.UnmanagedMemoryStream Звук_1 {
             get {
                 return ResourceManager.GetStream("Звук_1", resourceCulture);

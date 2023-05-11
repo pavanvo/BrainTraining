@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BrainTraining.Model.Tasks {
+    /// <summary>
+    /// Задача Гибкость
+    /// </summary>
     internal class AgileTask : BaseTask {
 
         ITask Menu { get; set; }
@@ -17,6 +20,9 @@ namespace BrainTraining.Model.Tasks {
         public override string Name => "Гибкость";
         public override string Description => $"Задание «{Name}» – сравните название цвета и цвет фигуры, выберите «галочку» если они соответствуют или «крестик» если нет.";
 
+        /// <summary>
+        /// Цвета 
+        /// </summary>
         Dictionary<Color, string> Colors = new Dictionary<Color, string>() {
             { Color.Red, "Красный"},
             { Color.Green, "Зелёный"},
@@ -25,6 +31,9 @@ namespace BrainTraining.Model.Tasks {
             { Color.Yellow, "Жёлтый"},
         };
 
+        /// <summary>
+        /// Уровни
+        /// </summary>
         Dictionary<int, int> Levels = new Dictionary<int, int>() {
             { 1, 15},
             { 2, 14},
@@ -59,23 +68,21 @@ namespace BrainTraining.Model.Tasks {
 
         };
 
-        enum Figura {
-            Trigangle,
-            Square,
-            Circle,
-        }
-
-        readonly Dictionary<Figura, Action<PaintEventArgs, Color>> Figures = new Dictionary<Figura, Action<PaintEventArgs, Color>>() {
-            { Figura.Trigangle, (e,c) => e.FillTriangle(c) },
-            { Figura.Square,(e, c) => e.FillSquare(c) },
-            { Figura.Circle,(e, c) => e.FillCircle(c) },
-        };
-
+        /// <summary>
+        /// Параметры Таблицы
+        /// </summary>
         static readonly int TableColomns = 1;
         static readonly int TableRows = 3;
 
+        /// <summary>
+        /// Таблица
+        /// </summary>
         TableLayoutPanel Table { get; set; } = ControlHelper.GetTable(TableColomns, TableRows);
-        Label LabelScore = new Controls.GrowLabel {
+        
+        /// <summary>
+        /// Лэйбл для очков
+        /// </summary>
+        Label LabelScore = new GrowLabel {
             Font = ControlHelper.BiggerFont,
             AutoSize = true,
             ForeColor = ControlHelper.Orange,
@@ -85,20 +92,26 @@ namespace BrainTraining.Model.Tasks {
         Waiter Waiter = new Waiter();
         private bool? Answer = null;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
         public AgileTask(ITask menu) : base(menu.MainForm) {
             Menu = menu;
-
-            Setup = async () => {
-                Table.Hide();
-                Table.CellBorderStyle = TableLayoutPanelCellBorderStyle.None;
-                MainForm.SetupTask(this);
-
-                Table.BackColor = Color.Silver;
-
-                await Start();
-            };
         }
 
+        public override async Task Setup() {
+            Table.Hide();
+            Table.CellBorderStyle = TableLayoutPanelCellBorderStyle.None;
+            MainForm.SetupTask(this);
+
+            Table.BackColor = Color.Silver;
+
+            await Start();
+        }
+
+        /// <summary>
+        /// Метод запуска задачи
+        /// </summary>
         private async Task Start() {
             var result = false;
             foreach (var lvl in Levels) {
@@ -114,9 +127,12 @@ namespace BrainTraining.Model.Tasks {
             var score = $"{text} {LabelScore.Text}";
 
             var restarttask = new RestartTask(Menu, this, score);//TODO get Scorefrom Level
-            restarttask.Setup();
+            await restarttask.Setup();
         }
 
+        /// <summary>
+        /// Метод Установки уровня
+        /// </summary>
         private async Task<bool> SetLevel(KeyValuePair<int, int> lvl) {
             var speed = lvl.Value * 1000;
             LabelScore.Text = lvl.Key + "";
@@ -124,15 +140,16 @@ namespace BrainTraining.Model.Tasks {
             Answer = null;
 
             var random = new Random();
-
-            var figura = Figures.ElementAt(random.Next(0, Figures.Count));
+            // Генерация уровня
+            var figures = Enum.GetValues(typeof(Figure));
+            var figura = (Figure)figures.GetValue(random.Next(0, figures.Length));
             var color1 = Colors.ElementAt(random.Next(0, Colors.Count));
             var color2 = Colors.ElementAt(random.Next(0, Colors.Count));
             var color3 = Colors.ElementAt(random.Next(0, Colors.Count));
             // Чтобы жизнь скучной не казалась
             if (random.Next(0, 10) > 5) color1 = color3;
 
-            var answerBox = FillTable(color1.Value, color2.Key, color3.Key, figura.Value);
+            var answerBox = FillTable(color1.Value, color2.Key, color3.Key, figura);
             Table.Show();
 
             await Waiter.Wait(timeout: speed);
@@ -154,15 +171,18 @@ namespace BrainTraining.Model.Tasks {
             return result;
         }
 
-        private PictureBox FillTable(string color1, Color color2, Color color3, Action<PaintEventArgs, Color> action) {
+        /// <summary>
+        /// Метод заполнения таблицы
+        /// </summary>
+        private PictureBox FillTable(string text, Color textColor, Color fugureColor, Figure figura) {
             Table.SuspendLayout();
             Table.Controls.Clear();
 
             var label = new GrowLabel {
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Text = color1,
-                ForeColor = color2,
+                Text = text,
+                ForeColor = textColor,
                 Font = ControlHelper.BigFont,
             };
             Table.Controls.Add(label, 0, 0);
@@ -170,7 +190,7 @@ namespace BrainTraining.Model.Tasks {
             var pictureBox = new PictureBox {
                 Dock = DockStyle.Fill
             };
-            pictureBox.Paint += (o, e) => action(e, color3);
+            pictureBox.DrawFigure(figura, fugureColor);
             Table.Controls.Add(pictureBox, 0, 1);
 
             var answerbox = new PictureBox {
@@ -183,11 +203,17 @@ namespace BrainTraining.Model.Tasks {
             return answerbox;
         }
 
-
+        /// <summary>
+        /// Метод Срабатывающий на событие щелчка мышью, Да
+        /// </summary>
         private void Yes_Click(object sender, EventArgs e) {
             Answer = true;
             Waiter.Go();
         }
+
+        /// <summary>
+        /// Метод Срабатывающий на событие щелчка мышь, Нет
+        /// </summary>
         private void No_Click(object sender, EventArgs e) {
             Answer = false;
             Waiter.Go();
@@ -225,12 +251,14 @@ namespace BrainTraining.Model.Tasks {
             var yes = new RoundButton {
                 Width = result.Width / 2,
                 Dock = DockStyle.Right,
+                ButtonBorderColor = ControlHelper.Blue,
             };
             yes.Click += Yes_Click;
 
             var no = new RoundButton {
                 Width = result.Width / 2,
                 Dock = DockStyle.Left,
+                ButtonBorderColor = ControlHelper.Blue,
             };
             
             no.Click += No_Click;

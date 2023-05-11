@@ -49,7 +49,7 @@ namespace BrainTraining.Controls {
         private bool IsPressed;
         private bool IsChecked;
         private Image Image;
-        private PointF Point;
+        private PointF ImagePoint;
 
         public RoundButton() {
             Size = new Size(100, 40);
@@ -60,7 +60,7 @@ namespace BrainTraining.Controls {
             Corners = Corners.All;
             BackColor = Color.Gainsboro;
             BackColor2 = Color.Silver;
-            ButtonBorderColor = Helpers.ControlHelper.Blue;
+            ButtonBorderColor = Color.Black;
             ButtonHighlightColor = Color.Orange;
             ButtonHighlightColor2 = Color.OrangeRed;
             ButtonHighlightForeColor = Color.Black;
@@ -73,7 +73,7 @@ namespace BrainTraining.Controls {
         public void SetImage(Image image) {
             var minimal = Height < Width ? Height : Width;
             Image = new Bitmap(image, new Size(minimal, minimal));
-            Point = new PointF((Width - minimal) / 2F, (Height - minimal) / 2F);
+            ImagePoint = new PointF((Width - minimal) / 2F, (Height - minimal) / 2F);
         }
 
         protected override CreateParams CreateParams {
@@ -118,7 +118,7 @@ namespace BrainTraining.Controls {
 
 
                 if (Image != null) {
-                    e.Graphics.DrawImage(Image, Point);
+                    e.Graphics.DrawImage(Image, ImagePoint);
                 }
 
             } catch { }

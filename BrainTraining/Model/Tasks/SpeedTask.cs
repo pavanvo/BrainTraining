@@ -15,36 +15,49 @@ namespace BrainTraining.Model.Tasks {
         public override string Name => "Скорость";
         public override string Description => $"Задание «{Name}» - выберите числа от наименьшего значения к большему.";
 
+        /// <summary>
+        /// Параметры Таблицы
+        /// </summary>
         static readonly int TableColomns = 6;
         static readonly int TableRows = 6;
-
-
         static readonly int NubresCount = TableColomns * TableRows;
+
+        /// <summary>
+        /// Таблица
+        /// </summary>
         TableLayoutPanel Table { get; set; } = ControlHelper.GetTable(TableColomns, TableRows);
 
         private Waiter Waiter = new Waiter();
 
         private int CurrentNumber = 0;
 
-        Label LabelNext = new Controls.GrowLabel {
+        /// <summary>
+        /// Лэйбл для Следующего
+        /// </summary>
+        Label LabelNext = new GrowLabel {
             Font = ControlHelper.BiggerFont,
             AutoSize = true,
             ForeColor = ControlHelper.Orange,
         };
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
         public SpeedTask(ITask menu) : base(menu.MainForm) {
             Menu = menu;
             Waiter.TimeFormat = @"mm\:ss\:ff";
-
-
-            Setup = async () => {
-                Table.Hide();
-                Waiter.LabelTime.Hide();
-                MainForm.SetupTask(this);
-                await Start();
-            };
         }
 
+        public override async Task Setup() {
+            Table.Hide();
+            Waiter.LabelTime.Hide();
+            MainForm.SetupTask(this);
+            await Start();
+        }
+
+        /// <summary>
+        /// Метод запуска задачи
+        /// </summary>
         private async Task Start() {
             var result = await SetLevel();
             if (result) {
@@ -54,10 +67,14 @@ namespace BrainTraining.Model.Tasks {
             var score = $"{text} {CurrentNumber} за {Waiter.LabelTime.Text}";
 
             var restarttask = new RestartTask(Menu, this, score);//TODO get Scorefrom Level
-            restarttask.Setup();
+            await restarttask.Setup();
         }
 
+        /// <summary>
+        /// Метод Установки уровня
+        /// </summary>
         private async Task<bool> SetLevel() {
+            LabelNext.Text = string.Empty;
             CurrentNumber = 0;
             var points = GenerateLevel();
 
@@ -70,6 +87,9 @@ namespace BrainTraining.Model.Tasks {
             return CurrentNumber == NubresCount;
         }
 
+        /// <summary>
+        /// Метод генерации уровня
+        /// </summary>
         private Dictionary<Point, int> GenerateLevel() {
             var random = new Random();
 
@@ -92,6 +112,10 @@ namespace BrainTraining.Model.Tasks {
             return points;
         }
 
+
+        /// <summary>
+        /// Метод заполнения таблицы
+        /// </summary>
         private void FillTable(Dictionary<Point, int> points) {
             Table.SuspendLayout();
             Table.Controls.Clear();
@@ -112,6 +136,9 @@ namespace BrainTraining.Model.Tasks {
             Table.ResumeLayout();
         }
 
+        /// <summary>
+        /// Метод Срабатывающий на событие Нажатия кнопки мыши
+        /// </summary>
         private void Button_MouseDown(object sender, MouseEventArgs e) {
             if (e.Button != MouseButtons.Left) return;
 
@@ -135,6 +162,9 @@ namespace BrainTraining.Model.Tasks {
             }
         }
 
+        /// <summary>
+        /// Метод Срабатывающий на событие Отпускания кнопки мыши
+        /// </summary>
         private void Button_MouseUp(object sender, MouseEventArgs e) {
             if (e.Button != MouseButtons.Left) return;
 

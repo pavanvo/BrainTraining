@@ -2,6 +2,7 @@
 using BrainTraining.Helpers;
 using BrainTraining.Model.UI;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BrainTraining.Model.Tasks {
@@ -24,20 +25,25 @@ namespace BrainTraining.Model.Tasks {
 
         };
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
         public RestartTask(ITask menu, ITask previousTask, string score) : base(menu.MainForm) {
             Menu = menu;
             PreviousTask = previousTask;
 
-            Setup = () => {
-                labelRestart.Text = Name;
-                labelRestart.Move2Centr();
+            labelRestart.Text = Name;
+            labelResult.Text = score;
+        }
 
-                labelResult.Text = score;
-                labelResult.Move2Centr();
+        public override Task Setup() {
+            labelRestart.Move2Centr();
 
-                MainForm.SetupTask(this);
-            };
+            labelResult.Move2Centr();
 
+            MainForm.SetupTask(this);
+
+            return Task.CompletedTask;
         }
 
         override protected Panel getHeader() {
@@ -64,7 +70,7 @@ namespace BrainTraining.Model.Tasks {
                 Dock = DockStyle.Right,
                 Font = ControlHelper.BigFont,
                 Text = "Заново",
-                BackColor = Color.White,
+                ButtonBorderColor = ControlHelper.Blue,
             };
             previous.Click += (o, e) => { Sound.Play(SoundType.Button); PreviousTask.Setup(); };
 
@@ -73,7 +79,7 @@ namespace BrainTraining.Model.Tasks {
                 Dock = DockStyle.Left,
                 Font = ControlHelper.BigFont,
                 Text = "В меню",
-                BackColor = Color.White,
+                ButtonBorderColor = ControlHelper.Blue,
             };
             toMenu.Click += (o, e) => { Sound.Play(SoundType.Button); Menu.Setup(); };
 

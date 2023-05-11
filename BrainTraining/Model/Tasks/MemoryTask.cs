@@ -61,16 +61,22 @@ namespace BrainTraining.Model.Tasks {
             ForeColor = ControlHelper.Orange,
         };
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
         public MemoryTask(ITask menu) : base(menu.MainForm) {
             Menu = menu;
-
-            Setup = async () => {
-                Table.Hide();
-                MainForm.SetupTask(this);
-                await Start();
-            };
         }
 
+        public override async Task Setup() {
+            Table.Hide();
+            MainForm.SetupTask(this);
+            await Start();
+        }
+
+        /// <summary>
+        /// Метод запуска задачи
+        /// </summary>
         private async Task Start() {
             var result = false;
             foreach (var lvl in Levels) {
@@ -87,9 +93,12 @@ namespace BrainTraining.Model.Tasks {
             var score = $"{text} {LabelScore.Text}";
 
             var restarttask = new RestartTask(Menu, this, score);//TODO get Scorefrom Level
-            restarttask.Setup();
+            await restarttask.Setup();
         }
 
+        /// <summary>
+        /// Метод Установки уровня
+        /// </summary>
         private async Task<bool> SetLevel(KeyValuePair<int, int> lvl) {
             LavelBlue = lvl.Value;
             LabelScore.Text = lvl.Key + "";
@@ -112,6 +121,9 @@ namespace BrainTraining.Model.Tasks {
             return CurrentBlue == LavelBlue;
         }
 
+        /// <summary>
+        /// Метод генерации уровня
+        /// </summary>
         private Dictionary<Point, bool> GenerateLevel(int count) {
             var bluePoints = new List<Point>();
             var random = new Random();
@@ -134,6 +146,9 @@ namespace BrainTraining.Model.Tasks {
             return points;
         }
 
+        /// <summary>
+        /// Метод первого заполнения таблицы
+        /// </summary>
         private void FillTable0(Dictionary<Point, bool> points) {
             Table.SuspendLayout();
             Table.Controls.Clear();
@@ -149,6 +164,9 @@ namespace BrainTraining.Model.Tasks {
             Table.ResumeLayout();
         }
 
+        /// <summary>
+        /// Метод второго заполнения таблицы
+        /// </summary>
         private void FillTable1(Dictionary<Point, bool> points) {
             Table.SuspendLayout();
             Table.Controls.Clear();
@@ -165,6 +183,9 @@ namespace BrainTraining.Model.Tasks {
             Table.ResumeLayout();
         }
 
+        /// <summary>
+        /// Метод Срабатывающий на событие Шелчка мышью
+        /// </summary>
         private void PictureBox_Click(object sender, EventArgs e) {
             var pictureBox = (PictureBox)sender;
             var blue = (bool)pictureBox.Tag;

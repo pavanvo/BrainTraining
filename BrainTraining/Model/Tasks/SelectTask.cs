@@ -2,6 +2,7 @@
 using BrainTraining.Helpers;
 using BrainTraining.Model.UI;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BrainTraining.Model.Tasks {
@@ -13,11 +14,20 @@ namespace BrainTraining.Model.Tasks {
         public override int ContentHeight { get; protected set; } = 75;
         public override int FooterHeight { get; protected set; } = 0;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
         public SelectTask(MainForm mainForm) : base(mainForm) {
-            Setup = () => MainForm.SetupTask(this);
-
         }
 
+        public override Task Setup() {
+            MainForm.SetupTask(this);
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Задачи которые в меню
+        /// </summary>
         public IList<ITask> Tasks { get; protected set; }
 
         override protected Panel getHeader() {
@@ -63,6 +73,7 @@ namespace BrainTraining.Model.Tasks {
                     Height = result.Height / 8,
                     Width = result.Width / 2,
                     Font = ControlHelper.BigFont,
+                    ButtonBorderColor = ControlHelper.Blue,
                 };
 
                 button.Text = task.Name;

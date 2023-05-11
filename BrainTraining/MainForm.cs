@@ -13,7 +13,7 @@ namespace BrainTraining {
             DoubleBuffered = true;
 
             InitializeComponent();
-
+            // Настройка формы на весь экран
             MaximizeBox = false;
             TopMost = true;
             WindowState = FormWindowState.Maximized;
@@ -21,14 +21,15 @@ namespace BrainTraining {
         }
 
         private void MainForm_Load(object sender, EventArgs e) {
-
+            // Установка меню
             var selectTask = new SelectTask(this);
             selectTask.Setup();
         }
 
         protected override void OnPaintBackground(PaintEventArgs e) {
             base.OnPaintBackground(e);
-            e.Graphics.FillRectangle(new LinearGradientBrush(Bounds, ControlHelper.Blue, Color.FromArgb(0, 0, 0), Angle), Bounds);
+            // Установка градиента
+            e.Graphics.FillRectangle(new LinearGradientBrush(Bounds, ControlHelper.Blue, Color.Black, Angle), Bounds);
         }
     }
 }
