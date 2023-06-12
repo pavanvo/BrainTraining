@@ -65,6 +65,9 @@ namespace BrainTraining.Model.Tasks {
                 Size = new Size(Minimal, header)
             };
 
+            var buttonHeight = header - ButtonBack.Location.Y;
+            if (ButtonBack.Height > buttonHeight) ButtonBack.Size = new Size(buttonHeight, buttonHeight);
+
             result.Controls.Add(ButtonBack);
             return result;
         }
